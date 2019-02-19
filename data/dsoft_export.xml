@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+
+    <record id="dsoft_export_field1" model="ir.exports.line">
+      <field name="name">dsoft_gestiune</field>
+    </record>
+
+    <record id="dsoft_export_field2" model="ir.exports.line">
+      <field name="name">dsoft_cont_cor</field>
+    </record>
+
+    <record id="dsoft_export_field3" model="ir.exports.line">
+      <field name="name">dsoft_tip_doc</field>
+    </record>
+
+    <record id="dsoft_export_field4" model="ir.exports.line">
+      <field name="name">dsoft_fel_misc</field>
+    </record>
+
+    <record id="dsoft_export_field5" model="ir.exports.line">
+      <field name="name">dsoft_codfur</field>
+    </record>
+
+    <record id="dsoft_export_field6" model="ir.exports.line">
+      <field name="name">dsoft_denfur</field>
+    </record>
+
+    <record id="dsoft_export_field7" model="ir.exports.line">
+      <field name="name">dsoft_numar</field>
+    </record>
+
+    <record id="dsoft_export_field8" model="ir.exports.line">
+      <field name="name">dsoft_data</field>
+    </record>
+
+    <record id="dsoft_export_field9" model="ir.exports.line">
+      <field name="name">dsoft_cont</field>
+    </record>
+
+    <record id="dsoft_export_field10" model="ir.exports.line">
+      <field name="name">dsoft_cod</field>
+    </record>
+
+    <record id="dsoft_export_field11" model="ir.exports.line">
+      <field name="name">dsoft_denumire</field>
+    </record>
+
+    <record id="dsoft_export_field12" model="ir.exports.line">
+      <field name="name">dsoft_um</field>
+    </record>
+
+    <record id="dsoft_export_field13" model="ir.exports.line">
+      <field name="name">dsoft_cantitate</field>
+    </record>
+
+    <record id="dsoft_export_field14" model="ir.exports.line">
+      <field name="name">dsoft_pret_achiz</field>
+    </record>
+
+    <record id="dsoft_export_field15" model="ir.exports.line">
+      <field name="name">dsoft_pret_liv</field>
+    </record>
+
+    <record id="dsoft_export_field16" model="ir.exports.line">
+      <field name="name">dsoft_pret_aman</field>
+    </record>
+
+    <record id="dsoft_export_field17" model="ir.exports.line">
+      <field name="name">dsoft_valoare</field>
+    </record>
+
+    <record id="dsoft_export_field18" model="ir.exports.line">
+      <field name="name">dsoft_tva</field>
+    </record>
+
+    <record id="dsoft_export_field19" model="ir.exports.line">
+      <field name="name">dsoft_val_tva</field>
+    </record>
+
+    <record id="dsoft_export_field20" model="ir.exports.line">
+      <field name="name">dsoft_anulat</field>
+    </record>
+
+    <record id="dsoft_export_field21" model="ir.exports.line">
+      <field name="name">dsoft_pret_valut</field>
+    </record>
+
+    <record id="dsoft_export_field22" model="ir.exports.line">
+      <field name="name">dsoft_tip_valut</field>
+    </record>
+
+    <record id="dsoft_export_field23" model="ir.exports.line">
+      <field name="name">dsoft_curs_valut</field>
+    </record>
+
+    <record id="dsoft_export_field24" model="ir.exports.line">
+      <field name="name">dsoft_curs_fact</field>
+    </record>
+
+    <record id="dsoft_export_field25" model="ir.exports.line">
+      <field name="name">dsoft_datascad</field>
+    </record>
+
+    <record id="dsoft_export_field26" model="ir.exports.line">
+      <field name="name">dsoft_val_valut</field>
+    </record>
+
+    <record id="dsoft_export_field27" model="ir.exports.line">
+      <field name="name">dsoft_comanda</field>
+    </record>
+
+    <record id="dsoft_export_field28" model="ir.exports.line">
+      <field name="name">dsoft_nr_aviz</field>
+    </record>
+
+    <record id="dsoft_export_field29" model="ir.exports.line">
+      <field name="name">dsoft_data_aviz</field>
+    </record>
+
+    <record id="dsoft_export_field30" model="ir.exports.line">
+      <field name="name">dsoft_jurnal</field>
+    </record>
+
+    <record id="dsoft_export_field31" model="ir.exports.line">
+      <field name="name">dsoft_agent</field>
+    </record>
+
+    <record id="dsoft_export_field32" model="ir.exports.line">
+      <field name="name">dsoft_tip_cec</field>
+    </record>
+
+    <record id="dsoft_export_field33" model="ir.exports.line">
+      <field name="name">dsoft_numar_cec</field>
+    </record>
+
+    <record id="dsoft_export_field34" model="ir.exports.line">
+      <field name="name">dsoft_tva_incas</field>
+    </record>
+
+    <record id="dsoft_export_field35" model="ir.exports.line">
+      <field name="name">dsoft_altec</field>
+    </record>
+
+    <record id="dsoft_export_field36" model="ir.exports.line">
+      <field name="name">dsoft_codfur1</field>
+    </record>
+
+    <record id="dsoft_export_field37" model="ir.exports.line">
+      <field name="name">dsoft_tipv1</field>
+    </record>
+
+    <record id="dsoft_export_field38" model="ir.exports.line">
+      <field name="name">dsoft_curs1</field>
+    </record>
+
+    <record id="dsoft_export_field39" model="ir.exports.line">
+      <field name="name">dsoft_curs_fact1</field>
+    </record>
+
+    <record id="dsoft_export_field40" model="ir.exports.line">
+      <field name="name">dsoft_chelt1</field>
+    </record>
+
+    <record id="dsoft_export_field41" model="ir.exports.line">
+      <field name="name">dsoft_tva1</field>
+    </record>
+
+    <record id="dsoft_export_field42" model="ir.exports.line">
+      <field name="name">dsoft_numar1</field>
+    </record>
+
+    <record id="dsoft_export_field43" model="ir.exports.line">
+      <field name="name">dsoft_data1</field>
+    </record>
+
+    <record id="dsoft_export_field44" model="ir.exports.line">
+      <field name="name">dsoft_cont_cor1</field>
+    </record>
+
+    <record id="dsoft_export_field45" model="ir.exports.line">
+      <field name="name">dsoft_jurnal1</field>
+    </record>
+
+    <record id="dsoft_export_field46" model="ir.exports.line">
+      <field name="name">dsoft_tva_incas1</field>
+    </record>
+
+    <record id="dsoft_export_field47" model="ir.exports.line">
+      <field name="name">dsoft_codfur2</field>
+    </record>
+
+    <record id="dsoft_export_field48" model="ir.exports.line">
+      <field name="name">dsoft_tipv2</field>
+    </record>
+
+    <record id="dsoft_export_field49" model="ir.exports.line">
+      <field name="name">dsoft_curs2</field>
+    </record>
+
+    <record id="dsoft_export_field50" model="ir.exports.line">
+      <field name="name">dsoft_curs_fact2</field>
+    </record>
+
+    <record id="dsoft_export_field51" model="ir.exports.line">
+      <field name="name">dsoft_chelt2</field>
+    </record>
+
+    <record id="dsoft_export_field52" model="ir.exports.line">
+      <field name="name">dsoft_tva2</field>
+    </record>
+
+    <record id="dsoft_export_field53" model="ir.exports.line">
+      <field name="name">dsoft_numar2</field>
+    </record>
+
+    <record id="dsoft_export_field54" model="ir.exports.line">
+      <field name="name">dsoft_data2</field>
+    </record>
+
+    <record id="dsoft_export_field55" model="ir.exports.line">
+      <field name="name">dsoft_cont_cor2</field>
+    </record>
+
+    <record id="dsoft_export_field56" model="ir.exports.line">
+      <field name="name">dsoft_jurnal2</field>
+    </record>
+
+    <record id="dsoft_export_field57" model="ir.exports.line">
+      <field name="name">dsoft_tva_incas2</field>
+    </record>
+
+    <!--  -->    <!--  -->    <!--  -->
+
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="name">DSOFT</field>
+    </record>
+
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field1'))]"/>
+    </record>
+
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field2'))]"/>
+    </record>
+
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field3'))]"/>
+    </record>
+
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field4'))]"/>
+    </record>
+
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field5'))]"/>
+    </record>
+
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field6'))]"/>
+    </record>
+
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field7'))]"/>
+    </record>
+
+    <record id="dsoft_export_fields" model="ir.exports">
+     <field name="export_fields" eval="[(4, ref('dsoft_export_field8'))]"/>
+    </record>
+
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field9'))]"/>
+    </record>
+
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field10'))]"/>
+    </record>
+
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field11'))]"/>
+    </record>
+
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field12'))]"/>
+    </record>
+
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field13'))]"/>
+    </record>
+
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field14'))]"/>
+    </record>
+
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field15'))]"/>
+    </record>
+
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field16'))]"/>
+    </record>
+
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field17'))]"/>
+    </record>
+
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field18'))]"/>
+    </record>
+
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field19'))]"/>
+    </record>
+
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field20'))]"/>
+    </record>
+
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field21'))]"/>
+    </record>
+
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field22'))]"/>
+    </record>
+
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field23'))]"/>
+    </record>
+
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field24'))]"/>
+    </record>
+
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field25'))]"/>
+    </record>
+
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field26'))]"/>
+    </record>
+
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field27'))]"/>
+    </record>
+
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field28'))]"/>
+    </record>
+
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field29'))]"/>
+    </record>
+
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field30'))]"/>
+    </record>
+
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field31'))]"/>
+    </record>
+
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field32'))]"/>
+    </record>
+
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field33'))]"/>
+    </record>
+
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field34'))]"/>
+    </record>
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field35'))]"/>
+    </record>
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field36'))]"/>
+    </record>
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field37'))]"/>
+    </record>
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field38'))]"/>
+    </record>
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field39'))]"/>
+    </record>
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field40'))]"/>
+    </record>
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field41'))]"/>
+    </record>
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field42'))]"/>
+    </record>
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field43'))]"/>
+    </record>
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field44'))]"/>
+    </record>
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field45'))]"/>
+    </record>
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field46'))]"/>
+    </record>
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field47'))]"/>
+    </record>
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field48'))]"/>
+    </record>
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field49'))]"/>
+    </record>
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field50'))]"/>
+    </record>
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field51'))]"/>
+    </record>
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field52'))]"/>
+    </record>
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field53'))]"/>
+    </record>
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field54'))]"/>
+    </record>
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field55'))]"/>
+    </record>
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field56'))]"/>
+    </record>
+    <record id="dsoft_export_fields" model="ir.exports">
+      <field name="export_fields" eval="[(4, ref('dsoft_export_field57'))]"/>
+    </record>
+
+  </data>
+</openerp>

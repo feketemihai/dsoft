@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data noupdate="1">
+
+    <record id="tvad-total-f-tax" model="account.tax">
+        <field name="name">TOTAL-F-TAX</field>
+        <field name="description">TOTAL-F-TAX </field>
+        <field name="amount">0.000000</field>
+        <field name="type">fixed</field>
+        <field name="type_tax_use">purchase</field>
+        <field name="ref_base_sign">-1.00</field>
+        <field name="ref_tax_sign">-1.00</field>
+        <field name="base_sign">1.00</field>
+        <field name="tax_sign">1.00</field>
+    </record>
+
+    <record id="product-product-total-f5" model="product.product">
+      <field name="name">TOTAL-F</field>
+      <!-- <field name="categ_id" ref="product_category_5"/> -->
+      <field name="standard_price">0</field>
+      <field name="list_price">0</field>
+      <field name="type">consu</field>
+      <field name="uom_id" ref="product.product_uom_unit"/>
+      <field name="uom_po_id" ref="product.product_uom_unit"/>
+      <field name="description">TOTAL-F</field>
+      <field name="dsoft_codg">2</field>
+      <field name="dsoft_cont">7588</field>
+      <field name="dsoft_cod">TOTAL-F</field>
+      <field name="dsoft_denumire">TOTAL-F</field>
+      <field name="dsoft_um">BUC</field>
+    </record>
+
+    <record id="product-product-total-f5" model="product.product">
+      <field name="supplier_taxes_id" search="[('description', 'like', '19Out')]" model="account.tax"/>
+    </record>
+
+    <record id="product-product-total-f5" model="product.product">
+      <field name="supplier_taxes_id" eval="[(4, ref('dsoft_accounting.tvad-total-f-tax'))]"/>
+    </record>
+
+  </data>
+</openerp>

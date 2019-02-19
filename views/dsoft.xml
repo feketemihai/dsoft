@@ -1,0 +1,1022 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- vim:fdn=3:
+-->
+<openerp>
+	<data>
+
+		<template id="assets_backend_dsoft" name="dsoft export assets" inherit_id="web.assets_backend">
+			<xpath expr="." position="inside">
+				<!-- <link rel="stylesheet" href="/base_import/static/src/css/import.css"/> -->
+				<script type="text/javascript" src="/dsoft_accounting/static/src/js/dsoft_export.js"></script>
+			</xpath>
+		</template>
+
+		<record id="ds_product_template_tree_view" model="ir.ui.view">
+			<field name="name">product.template.product.tree</field>
+			<field name="model">product.template</field>
+			<field name="inherit_id" ref="stock.view_stock_product_template_tree"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='virtual_available']" position="attributes">
+					<attribute name="string">Cant. Prognozata</attribute>
+				</xpath>
+				<xpath expr="//field[@name='virtual_available']" position="after">
+					<field name="uom_id" string="UM"/>
+				</xpath>
+			</field>
+		</record>
+
+		<menuitem id="top_menu_id"
+				  name="DSOFT" action="account.action_invoice_tree2"
+				  sequence="21"
+				  groups="base.group_sale_salesman,base.group_sale_manager"/>
+
+		<menuitem id="ds_import"
+				  name="Import"
+				  sequence="10"
+				  parent="top_menu_id" />
+
+
+		<menuitem id="ds_invoice_lines"
+				  name="Facturi"
+				  sequence="20"
+				  parent="top_menu_id" />
+
+		<menuitem id="ds_cod_fur"
+				  name="Coduri Furnizor"
+				  sequence="25"
+				  parent="top_menu_id" />
+
+		<!--  -->
+
+		<record id="ds_action_account_period" model="ir.actions.act_window">
+			<field name="name">Perioade</field>
+			<field name="res_model">account.period</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="context">{'search_default_draft': 1}</field>
+			<field name="domain">[('special', '=', False)]</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Click to add a fiscal period.
+				</p><p>
+				An accounting period typically is a month or a quarter. It
+				usually corresponds to the periods of the tax declaration.
+			</p>
+			</field>
+		</record>
+
+		<menuitem id="ds_export_menu"
+				  sequence="40"
+				  name="Export"
+				  parent="top_menu_id" />
+
+		<menuitem id="ds_export_submenu" name="DSOFT Export"
+				  parent="ds_export_menu"
+				  action="ds_action_account_period"/>
+
+
+		<record id="ds_view_account_invoice_line_filter" model="ir.ui.view">
+			<field name="name">dsoft.account.invoice.select</field>
+			<field name="model">dsoft_accounting.invoice_line</field>
+			<field name="arch" type="xml">
+				<search string="Search Invoice">
+					<field name="period_id" string="Perioada"/>
+					<separator/>
+					<group expand="0" string="Group By">
+						<filter string="Period" name="ds_invoice_line_period_group" context="{'group_by':'period_id'}"/>
+					</group>
+				</search>
+			</field>
+		</record>
+
+		<record model="ir.values" id="export_dsoft_all">
+			<field name="model_id" ref="account.model_account_period" />
+			<field name="name">DSOFT Export</field>
+			<field name="key2">client_action_multi</field>
+			<field name="value" eval="'ir.actions.act_url,' + str(ref('dsoft_accounting.export_dsoft_act_url'))" />
+			<field name="key">action</field>
+			<field name="model">account.period</field>
+		</record>
+
+		<record id="ds_view_account_period_form" model="ir.ui.view">
+			<field name="name">account.period.form</field>
+			<field name="model">account.period</field>
+			<field name="inherit_id" ref="account.view_account_period_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//sheet" position="inside">
+					<group name="dsoft_line_types">
+						<group>
+							<div name="in_invoices">
+								<label for="export_in_invoices"/>
+								<field name="export_in_invoices"/>
+							</div>
+
+							<div name="out_invoices">
+								<label for="export_out_invoices"/>
+								<field name="export_out_invoices"/>
+							</div>
+
+						</group>
+						<group/>
+					</group>
+				</xpath>
+
+				<xpath expr="//sheet" position="after">
+					<label for="file_name" string="Nume fisier export"/>
+					<field name="file_name"/>
+					<separator/>
+					<label for="invoice_lines"/>
+					<field name="invoice_lines">
+						<tree string="Linii Facturi">
+							<field name="dsoft_gestiune"/>
+							<field name="dsoft_cont_cor"/>
+							<field name="dsoft_tip_doc"/>
+							<field name="dsoft_fel_misc"/>
+							<field name="dsoft_codfur"/>
+							<field name="dsoft_denfur"/>
+							<field name="dsoft_numar" />
+							<field name="dsoft_data"/>
+							<field name="dsoft_cont"/>
+							<field name="dsoft_cod"/>
+							<field name="dsoft_denumire"/>
+							<field name="dsoft_um"/>
+							<field name="dsoft_cantitate"/>
+							<field name="dsoft_pret_achiz"/>
+							<field name="dsoft_pret_liv" attrs="{'invisible':[('dsoft_pret_liv','=',0.0)]}"/>
+							<field name="dsoft_pret_aman"/>
+							<field name="dsoft_valoare"/>
+							<field name="dsoft_tva"/>
+							<field name="dsoft_val_tva"/>
+							<field name="dsoft_anulat"/>
+							<field name="dsoft_pret_valut" attrs="{'invisible':[('dsoft_pret_valut','=',0.0)]}"/>
+							<field name="dsoft_tip_valut" />
+							<field name="dsoft_curs_valut" attrs="{'invisible':[('dsoft_curs_valut','=',0.0)]}"/>
+							<field name="dsoft_curs_fact" attrs="{'invisible':[('dsoft_curs_fact','=',0.0)]}"/>
+							<field name="dsoft_datascad"/>
+							<field name="dsoft_val_valut" attrs="{'invisible':[('dsoft_val_valut','=',0.0)]}"/>
+							<field name="dsoft_comanda"/>
+							<field name="dsoft_nr_aviz"/>
+							<field name="dsoft_data_aviz"/>
+							<field name="dsoft_jurnal" attrs="{'invisible':[('dsoft_jurnal','=',' ')]}"/>
+							<field name="dsoft_agent"/>
+							<field name="dsoft_tip_cec"/>
+							<field name="dsoft_numar_cec" attrs="{'invisible':[('dsoft_numar_cec','=',0)]}"/>
+							<field name="dsoft_tva_incas"/>
+							<field name="dsoft_altec"/>
+						</tree>
+					</field>
+				</xpath>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="ds_invoice_line_tree">
+			<field name="name">Linii Facturi</field>
+			<field name="model">dsoft_accounting.invoice_line</field>
+			<field name="priority">1</field>
+			<field name="arch" type="xml">
+				<tree string="Linii Facturi">
+					<field name="dsoft_gestiune"/>
+					<field name="dsoft_cont_cor"/>
+					<field name="dsoft_tip_doc"/>
+					<field name="dsoft_fel_misc"/>
+					<field name="dsoft_codfur"/>
+					<field name="dsoft_denfur"/>
+					<field name="dsoft_numar" />
+					<field name="dsoft_data"/>
+					<field name="dsoft_cont"/>
+					<field name="dsoft_cod"/>
+					<field name="dsoft_denumire"/>
+					<field name="dsoft_um"/>
+					<field name="dsoft_cantitate"/>
+					<field name="dsoft_pret_achiz"/>
+					<field name="dsoft_pret_liv" attrs="{'invisible':[('dsoft_pret_liv','=',0.0)]}"/>
+					<field name="dsoft_pret_aman"/>
+					<field name="dsoft_valoare"/>
+					<field name="dsoft_tva"/>
+					<field name="dsoft_val_tva"/>
+					<field name="dsoft_anulat"/>
+					<field name="dsoft_pret_valut" attrs="{'invisible':[('dsoft_pret_valut','=',0.0)]}"/>
+					<field name="dsoft_tip_valut" />
+					<field name="dsoft_curs_valut" attrs="{'invisible':[('dsoft_curs_valut','=',0.0)]}"/>
+					<field name="dsoft_curs_fact" attrs="{'invisible':[('dsoft_curs_fact','=',0.0)]}"/>
+					<field name="dsoft_val_valut" attrs="{'invisible':[('dsoft_val_valut','=',0.0)]}"/>
+					<field name="dsoft_datascad"/>
+					<field name="dsoft_comanda"/>
+					<field name="dsoft_nr_aviz"/>
+					<field name="dsoft_data_aviz"/>
+					<field name="dsoft_jurnal" attrs="{'invisible':[('dsoft_jurnal','=',' ')]}"/>
+					<field name="dsoft_agent"/>
+					<field name="dsoft_tip_cec"/>
+					<field name="dsoft_numar_cec" attrs="{'invisible':[('dsoft_numar_cec','=',0)]}"/>
+					<field name="dsoft_tva_incas"/>
+					<field name="dsoft_altec"/>
+				</tree>
+			</field>
+		</record>
+
+
+		<record model="ir.actions.act_window" id="ds_invoice_lines_action">
+			<field name="name">Linii Facturi</field>
+			<field name="res_model">dsoft_accounting.invoice_line</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree</field>
+			<field name="context">{'search_default_ds_invoice_line_period_group': 1}
+			</field>
+		</record>
+
+
+
+		<record model="ir.actions.act_window.view" id="ds_invoice_lines_tree_view">
+			<field name="name">Linii Facturi</field>
+			<field name="sequence" eval="20"/>
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="ds_invoice_line_tree"/>
+			<field name="act_window_id" ref="ds_invoice_lines_action"/>
+		</record>
+
+
+		<menuitem id="ds_invoices_submenu" name="Linii Facturi"
+				  parent="ds_invoice_lines"
+				  action="ds_invoice_lines_action"/>
+
+
+		<menuitem id="ds_invoice_lines"
+				  name="Facturi"
+				  sequence="2"
+				  parent="top_menu_id" />
+
+		<menuitem id="ds_supp_invoice_submenu"
+				  name="Facturi Furnizori"
+				  sequence="1"
+				  parent="ds_invoice_lines" />
+
+		<menuitem action="account.action_invoice_tree2" id="ds_menu_action_invoice_tree2" parent="ds_supp_invoice_submenu"/>
+
+		<menuitem id="ds_cust_invoice_submenu"
+				  name="Facturi Clienti"
+				  sequence="1"
+				  parent="ds_invoice_lines" />
+
+		<menuitem action="account.action_invoice_tree1" id="ds_menu_action_invoice_tree1" parent="ds_cust_invoice_submenu"/>
+
+		<!--  -->
+
+
+		<record id="dsoft_product_template_only_form_view" model="ir.ui.view">
+			<field name="name">dsoft.product.template.product.form</field>
+			<field name="model">product.template</field>
+			<field name="mode">primary</field>
+			<field name="priority" eval="8" />
+			<field name="inherit_id" ref="product.product_template_only_form_view"/>
+			<field name="arch" type="xml">
+
+				<xpath expr="//page[@string='Information']" position="before">
+					<page name="DSOFT" string="DSOFT">
+						<group col="10">
+							<group colspan="4">
+								<label for="dsoft_cod" string="Cod produs"/>
+								<field name="dsoft_cod" nolabel="1"/>
+
+								<label for="dsoft_denumire" string="Denumire Produs"/>
+								<field name="dsoft_denumire" nolabel="1"/>
+
+								<label for="dsoft_um" string="Unitate de Masura"/>
+								<field name="dsoft_um" nolabel="1"/>
+
+							</group>
+							<group colspan="6">
+								<label for="dsoft_cont" string="Cont contabil produs"/>
+								<field name="dsoft_cont" nolabel="1"/>
+
+								<label for="dsoft_cont" string="3021  - Materiale auxiliare"/>
+								<br></br>
+								<label for="dsoft_cont" string="704  - Servicii (Manopera)"/>
+								<br></br>
+								<label for="dsoft_cont" string="345  - Produse Finite"/>
+								<br></br>
+								<label for="dsoft_cont" string="419  - Avans Client"/>
+								<br></br>
+								<label for="dsoft_cont" string="7588  - TOTAL-F"/>
+							</group>
+						</group>
+					</page>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="dsoft_product_normal_form_view" model="ir.ui.view">
+			<field name="name">dsoft.product.template.common.form</field>
+			<field name="model">product.product</field>
+			<field eval="6" name="priority"/>
+			<field name="inherit_id" ref="product.product_normal_form_view"/>
+			<field name="arch" type="xml">
+				<xpath expr="//page[@string='Information']" position="before">
+					<page name="DSOFT" string="DSOFT">
+						<group>
+							<label for="dsoft_cont" string="Cont contabil produs"/>
+							<field name="dsoft_cont" nolabel="1"/>
+						</group>
+						<group>
+							<label for="dsoft_cod" string="Cod produs"/>
+							<field name="dsoft_cod" nolabel="1"/>
+
+							<label for="dsoft_denumire" string="Denumire Produs"/>
+							<field name="dsoft_denumire" nolabel="1"/>
+
+							<label for="dsoft_um" string="Unitate de Masura"/>
+							<field name="dsoft_um" nolabel="1"/>
+
+						</group>
+					</page>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="ds_invoice_tree" model="ir.ui.view">
+			<field name="name">dsoft.account.invoice.tree</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_tree"/>
+			<field eval="10" name="priority"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='number']" position="after">
+					<field name="dsoft_numar" string="NIR"/>
+				</xpath>
+
+				<xpath expr="//field[@name='number']" position="before">
+					<field name="supplier_invoice_number"/>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="dsoft_invoice_line_supplier_form" model="ir.ui.view">
+			<field name="name">account.invoice.line.supplier.form</field>
+			<field name="model">account.invoice.line</field>
+			<field name="arch" type="xml">
+				<form string="Linie Factura">
+					<field name="invoice_id" invisible="1"/>
+					<field name="type" invisible="1"/>
+					<field name="partner_id" invisible="1"/>
+					<field name="fiscal_position" invisible="1"/>
+					<field name="currency_id" invisible="1"/>
+					<field name="company_id" invisible="1"/>
+					<field name="journal_id" invisible="1"/>
+					<group>
+						<group>
+							<field name="product_id"
+								   on_change="product_id_change(product_id, uos_id, quantity, name, type, partner_id, fiscal_position, price_unit, currency_id, company_id, context)"/>
+							<field name="name"/>
+							<field name="company_id" invisible="1"/>
+							<field name="account_id" groups="account.group_account_user"
+								   on_change="onchange_account_id(product_id, partner_id, type, fiscal_position,account_id)"/>
+							<field name="account_analytic_id" groups="analytic.group_analytic_accounting"
+								   domain="[('type','!=','view'), ('company_id', '=', company_id), ('state','not in',('close','cancelled'))]"/>
+							<field name="quantity"/>
+							<field name="uos_id" groups="product.group_uom"
+								   on_change="uos_id_change(product_id, uos_id, quantity, name, type, partner_id, fiscal_position, price_unit, currency_id, company_id, context)"/>
+							<field name="price_unit"/>
+							<field name="discount" groups="sale.group_discount_per_so_line"/>
+							<field name="invoice_line_tax_id" widget="many2many_tags" context="{'type':type}"
+								   domain="[('parent_id','=',False),('company_id', '=', company_id)]"/>
+							<field name="price_subtotal"/>
+						</group>
+						<group name="dsoft_fields">
+							<field name="dsoft_gestiune"/>
+							<field name="dsoft_cont_cor"/>
+							<field name="dsoft_tip_doc"/>
+							<field name="dsoft_fel_misc"/>
+							<field name="dsoft_codfur"/>
+							<field name="dsoft_denfur"/>
+							<field name="dsoft_numar"/>
+							<field name="dsoft_data"/>
+							<field name="dsoft_cod"/>
+							<field name="dsoft_denumire"/>
+							<field name="dsoft_um"/>
+							<field name="dsoft_cantitate"/>
+							<field name="dsoft_pret_achiz"/>
+							<field name="dsoft_pret_liv"/>
+							<field name="dsoft_pret_aman"/>
+							<field name="dsoft_valoare"/>
+							<field name="dsoft_tva"/>
+							<field name="dsoft_anulat"/>
+							<field name="dsoft_pret_valut"/>
+							<field name="dsoft_tip_valut" />
+							<field name="dsoft_curs_valut"/>
+							<field name="dsoft_curs_fact"/>
+							<field name="dsoft_val_valut"/>
+							<field name="dsoft_datascad"/>
+							<field name="dsoft_comanda"/>
+							<field name="dsoft_nr_aviz"/>
+							<field name="dsoft_data_aviz"/>
+							<field name="dsoft_jurnal"/>
+							<field name="dsoft_agent"/>
+							<field name="dsoft_tip_cec"/>
+							<field name="dsoft_numar_cec"/>
+							<field name="dsoft_tva_incas"/>
+							<field name="dsoft_altec"/>
+						</group>
+					</group>
+					<footer>
+						<button name="do_save" string="_Apply" type="object" class="oe_highlight"/>
+						or
+						<button string="_Cancel" class="oe_link" special="cancel" />
+					</footer>
+				</form>
+			</field>
+		</record>
+
+
+		<record model="ir.ui.view" id="ds_sale_account_invoice_form">
+			<field name="name">Account Invoice</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="sale.account_invoice_form"/>
+			<field name="arch" type="xml">
+
+				<xpath expr="//field[@name='internal_number']" position="replace">
+					<field name="internal_number" attrs="{'readonly': False}" />
+				</xpath>
+
+				<xpath expr="//field[@name='date_due']" position="replace">
+				</xpath>
+				<xpath expr="//field[@name='payment_term']" position="replace">
+				</xpath>
+
+				<xpath expr="//field[@name='date_invoice']" position="after">
+					<field name="payment_term"/>
+					<field name="date_due"/>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="dsoft_account_invoice_form" model="ir.ui.view">
+			<field name="name">account.invoice.form</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_form"/>
+			<field name="arch" type="xml">
+
+				<xpath expr="//field[@name='account_id']" position="attributes">
+					<attribute name="domain"></attribute>
+				</xpath>
+
+				<xpath expr="//field[@name='invoice_line']/tree/field[@name='account_id']" position="attributes">
+					<attribute name="domain"></attribute>
+				</xpath>
+
+				<xpath expr="//field[@name='invoice_line']/tree/field[@name='account_id']" position="replace">
+					<field name="account_id" groups="account.group_account_user" on_change="onchange_account_id(product_id, parent.partner_id, parent.type, parent.fiscal_position,account_id)"/>
+				</xpath>
+
+				<xpath expr="//field[@name='internal_number']" position="replace">
+					<field name="internal_number" attrs="{'readonly': False}" />
+				</xpath>
+
+				<xpath expr="//field[@name='currency_id']" position="attributes">
+					<attribute name="context">{'active_id': active_id}</attribute>
+				</xpath>
+
+				<xpath expr="//field[@name='tax_line']" position="replace">
+				</xpath>
+
+				<xpath expr="//field[@name='price_subtotal']" position="replace">
+				</xpath>
+				<xpath expr="//field[@name='invoice_line_tax_id']" position="before">
+					<field name="price_subtotal"/>
+				</xpath>
+
+				<xpath expr="//field[@name='amount_total']" position="after">
+					<field name="dsoft_amount_total"/>
+				</xpath>
+
+				<xpath expr="//field[@name='invoice_line_tax_id']" position="after">
+					<field name="tax_subtotal" attrs="{'readonly': [('name', '!=', 'TOTAL-F')]}"/>
+					<field name="dsoft_pret_valut" invisible="1"/>
+					<field name="dsoft_tip_valut" invisible="1"/>
+					<field name="dsoft_curs_valut" invisible="1"/>
+					<field name="dsoft_curs_fact" invisible="1"/>
+					<field name="dsoft_val_valut" invisible="1"/>
+				</xpath>
+
+				<xpath expr="//page[@string='Payments']" position="after">
+					<page name="DSOFT" string="DSOFT">
+						<group>
+							<group>
+								<div>
+									<label for="dsoft_codfur" style="font-weight: bold;" string="Cod Furnizor"/>
+									<label for="dsoft_codfur" style="color: red; font-weight: bold;" string="(obligatoriu)"/>
+								</div>
+								<field name="dsoft_codfur" nolabel="1"/>
+
+
+								<label for="dsoft_cont_cor" string="Cont Corespondent"/>
+								<field name="dsoft_cont_cor" nolabel="1"/>
+
+								<label for="dsoft_tip_doc" string="Tip Document"/>
+								<field name="dsoft_tip_doc" nolabel="1"/>
+
+								<label for="dsoft_fel_misc" string="Fel Miscare"/>
+								<field name="dsoft_fel_misc" nolabel="1"/>
+
+								<label for="dsof_numar" string="Numar Document (Pt receptii = NIR)"/>
+								<field name="dsoft_numar" nolabel="1"/>
+
+								<label for="dsoft_data" string="Data Document (Pt receptii = Data NIR)"/>
+								<field name="dsoft_data" nolabel="1"/>
+
+								<label for="dsoft_anulat" string="Anulat"/>
+								<field name="dsoft_anulat" nolabel="1"/>
+
+								<label for="dsoft_comanda" string="Comanda"/>
+								<field name="dsoft_comanda" nolabel="1"/>
+
+								<label for="dsoft_nr_aviz" string="Numar Aviz (Pt. receptii = Nr. facturii furnizor)"/>
+								<field name="dsoft_nr_aviz" nolabel="1"/>
+
+								<label for="dsoft_data_aviz" string="Data Aviz (Data fact. furnizor)"/>
+								<field name="dsoft_data_aviz" nolabel="1"/>
+
+								<label for="dsoft_datascad" string="Data scadentei la plata"/>
+								<field name="dsoft_datascad" nolabel="1"/>
+
+								<label for="dsoft_jurnal" string="Jurnal"/>
+								<field name="dsoft_jurnal" nolabel="1"/>
+								<label for="dsoft_jurnal" string="Spatiu = Pentru facturi din RO (achizitii si vanzari)"/>
+								<label for="dsoft_jurnal" string="TI = Cumparare cu taxare inversa RO"/>
+								<label for="dsoft_jurnal" string="EU = Pt achizitii/vanzari din EU"/>
+								<label for="dsoft_jurnal" string="NE = Pt achizitii/vanzari non EU"/>
+								<label for="dsoft_jurnal" string="15 = Pt servicii achizitionate din EU"/>
+								<label for="dsoft_jurnal" string="AS = Pt servicii prestate in EU, scutite cu drept de deducere"/>
+								<label for="dsoft_jurnal" string="AF = Pt servicii prestate in EU, scutite fara drept de deducere"/>
+								<label for="dsoft_jurnal" string="ES = Pt cumparari din EU, scutite de TVA, etc"/>
+
+								<br/><br/>
+								<label for="dsoft_agent" string="Agent"/>
+								<field name="dsoft_agent" nolabel="1"/>
+
+								<label for="dsoft_tip_cec" string="Tip Cec"/>
+								<field name="dsoft_tip_cec" nolabel="1"/>
+
+								<label for="dsoft_numar_cec" string="Numar Cec"/>
+								<field name="dsoft_numar_cec" nolabel="1"/>
+
+								<label for="dsoft_tva_incas" string="Factura cu TVA la incasare"/>
+								<field name="dsoft_tva_incas" nolabel="1"/>
+
+								<label for="dsoft_altec" string="ALTEC"/>
+								<field name="dsoft_altec" nolabel="1"/>
+							</group>
+							<group></group>
+						</group>
+						<div style="overflow: auto;">
+							<br/>
+							<label string="DSOFT Export"/>
+							<field name="dsoft_invoice_line">
+								<tree string="Invoice lines">
+									<field name="dsoft_gestiune"/>
+									<field name="dsoft_cont_cor"/>
+									<field name="dsoft_tip_doc"/>
+									<field name="dsoft_fel_misc"/>
+									<field name="dsoft_codfur"/>
+									<field name="dsoft_denfur"/>
+									<field name="dsoft_numar" attrs="{'invisible':[('dsoft_numar','=',0)]}"/>
+									<field name="dsoft_data"/>
+									<field name="dsoft_cont"/>
+									<field name="dsoft_cod"/>
+									<field name="dsoft_denumire"/>
+									<field name="dsoft_um"/>
+									<field name="dsoft_cantitate"/>
+									<field name="dsoft_pret_achiz"/>
+									<field name="dsoft_pret_liv" attrs="{'invisible':[('dsoft_pret_liv','=',0.0)]}"/>
+									<field name="dsoft_pret_aman"/>
+									<field name="dsoft_valoare"/>
+									<field name="dsoft_tva"/>
+									<field name="dsoft_val_tva"/>
+									<field name="dsoft_anulat"/>
+									<field name="dsoft_pret_valut" attrs="{'invisible':[('dsoft_pret_valut','=',0.0)]}"/>
+									<field name="dsoft_tip_valut" />
+									<field name="dsoft_curs_valut" attrs="{'invisible':[('dsoft_curs_valut','=',0.0)]}"/>
+									<field name="dsoft_curs_fact" attrs="{'invisible':[('dsoft_curs_fact','=',0.0)]}"/>
+									<field name="dsoft_val_valut" attrs="{'invisible':[('dsoft_val_valut','=',0.0)]}"/>
+									<field name="dsoft_datascad"/>
+									<field name="dsoft_comanda"/>
+									<field name="dsoft_nr_aviz"/>
+									<field name="dsoft_data_aviz"/>
+									<field name="dsoft_jurnal"/>
+									<field name="dsoft_agent"/>
+									<field name="dsoft_tip_cec"/>
+									<field name="dsoft_numar_cec" attrs="{'invisible':[('dsoft_numar_cec','=',0)]}"/>
+									<field name="dsoft_tva_incas"/>
+									<field name="dsoft_altec"/>
+								</tree>
+							</field>
+						</div>
+					</page>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="dsoft_invoice_supplier_form" model="ir.ui.view">
+			<field name="name">account.invoice.supplier.form</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_supplier_form"/>
+			<field name="arch" type="xml">
+
+				<xpath expr="//sheet/div[@class='oe_title']" position="before">
+					<div class="oe_right oe_button_box" style="width: 300px;" name="buttons">
+						<button class="oe_inline oe_stat_button" name="purchase_open" type="object" icon="fa-usd" string="Deschide Achizitie">
+						</button>
+					</div>
+				</xpath>
+
+				<xpath expr="//field[@name='account_id']" position="attributes">
+					<attribute name="domain"></attribute>
+				</xpath>
+
+				<xpath expr="//field[@name='invoice_line']" position="attributes">
+					<attribute name="context">{'partner_id': partner_id, 'price_type': context.get('price_type') or False, 'type': type, 'active_id': context.get('active_id')}</attribute>
+				</xpath>
+
+				<xpath expr="//field[@name='invoice_line']/tree/field[@name='account_id']" position="attributes">
+					<attribute name="domain"></attribute>
+				</xpath>
+
+
+				<xpath expr="//field[@name='internal_number']" position="replace">
+					<field name="internal_number" attrs="{'readonly': False}" />
+				</xpath>
+
+				<xpath expr="//field[@name='currency_id']" position="attributes">
+					<attribute name="context">{'active_id': active_id}</attribute>
+				</xpath>
+
+				<xpath expr="//group[@class='oe_subtotal_footer oe_right']" position="after">
+					<div style="margin-top: 50px;">
+						<div>
+							<label for="global_discount" string="Discount (%)"/>
+							<field name="global_discount" class="oe_inline"/>
+						</div>
+						<button class="oe_inline oe_link " name="distribute_discount" type="object" string="Distribuie pe Linii">
+						</button>
+					</div>
+				</xpath>
+				<xpath expr="//field[@name='tax_line']" position="replace">
+				</xpath>
+
+				<xpath expr="//field[@name='price_subtotal']" position="replace">
+				</xpath>
+				<xpath expr="//field[@name='invoice_line_tax_id']" position="before">
+					<field name="price_subtotal"/>
+				</xpath>
+
+				<xpath expr="//field[@name='amount_total']" position="after">
+					<field name="dsoft_amount_total"/>
+				</xpath>
+
+				<xpath expr="//field[@name='invoice_line_tax_id']" position="after">
+					<field name="tax_subtotal" attrs="{'readonly': [('name', '!=', 'TOTAL-F')]}"/>
+					<button name="action_open_invoice_line" type="object" icon="gtk-open" string="Open">
+					</button>
+					<field name="dsoft_pret_valut" invisible="1"/>
+					<field name="dsoft_tip_valut" invisible="1"/>
+					<field name="dsoft_curs_valut" invisible="1"/>
+					<field name="dsoft_curs_fact" invisible="1"/>
+					<field name="dsoft_val_valut" invisible="1"/>
+				</xpath>
+
+				<xpath expr="//field[@name='invoice_line']/tree/field[@name='name']" position="attributes">
+					<attribute name="string">Nume factura furnizor</attribute>
+				</xpath>
+
+				<xpath expr="//page[@string='Payments']" position="after">
+					<page name="DSOFT" string="DSOFT">
+						<group>
+							<group>
+								<div>
+									<label for="dsoft_codfur" style="font-weight: bold;" string="Cod Furnizor"/>
+									<label for="dsoft_codfur" style="color: red; font-weight: bold;" string="(obligatoriu)"/>
+								</div>
+								<field name="dsoft_codfur" nolabel="1"/>
+
+
+								<label for="dsoft_cont_cor" string="Cont Corespondent"/>
+								<field name="dsoft_cont_cor" nolabel="1"/>
+
+								<label for="dsoft_tip_doc" string="Tip Document"/>
+								<field name="dsoft_tip_doc" nolabel="1"/>
+
+								<label for="dsoft_fel_misc" string="Fel Miscare"/>
+								<field name="dsoft_fel_misc" nolabel="1"/>
+
+								<label for="dsof_numar" string="Numar Document (Pt receptii = NIR)"/>
+								<field name="dsoft_numar" nolabel="1"/>
+
+								<label for="dsoft_data" string="Data Document (Pt receptii = Data NIR)"/>
+								<field name="dsoft_data" nolabel="1"/>
+
+								<label for="dsoft_anulat" string="Anulat"/>
+								<field name="dsoft_anulat" nolabel="1"/>
+
+								<label for="dsoft_comanda" string="Comanda"/>
+								<field name="dsoft_comanda" nolabel="1"/>
+
+								<label for="dsoft_nr_aviz" string="Numar Aviz (Pt. receptii = Nr. facturii furnizor)"/>
+								<field name="dsoft_nr_aviz" nolabel="1"/>
+
+								<label for="dsoft_data_aviz" string="Data Aviz (Data fact. furnizor)"/>
+								<field name="dsoft_data_aviz" nolabel="1"/>
+
+								<label for="dsoft_datascad" string="Data scadentei la plata"/>
+								<field name="dsoft_datascad" nolabel="1"/>
+
+								<label for="dsoft_jurnal" string="Jurnal"/>
+								<field name="dsoft_jurnal" nolabel="1"/>
+								<label for="dsoft_jurnal" string="Spatiu = Pentru facturi din RO (achizitii si vanzari)"/>
+								<label for="dsoft_jurnal" string="TI = Cumparare cu taxare inversa RO"/>
+								<label for="dsoft_jurnal" string="EU = Pt achizitii/vanzari din EU"/>
+								<label for="dsoft_jurnal" string="NE = Pt achizitii/vanzari non EU"/>
+								<label for="dsoft_jurnal" string="15 = Pt servicii achizitionate din EU"/>
+								<label for="dsoft_jurnal" string="AS = Pt servicii prestate in EU, scutite cu drept de deducere"/>
+								<label for="dsoft_jurnal" string="AF = Pt servicii prestate in EU, scutite fara drept de deducere"/>
+								<label for="dsoft_jurnal" string="ES = Pt cumparari din EU, scutite de TVA, etc"/>
+
+								<br/><br/>
+								<label for="dsoft_agent" string="Agent"/>
+								<field name="dsoft_agent" nolabel="1"/>
+
+								<label for="dsoft_tip_cec" string="Tip Cec"/>
+								<field name="dsoft_tip_cec" nolabel="1"/>
+
+								<label for="dsoft_numar_cec" string="Numar Cec"/>
+								<field name="dsoft_numar_cec" nolabel="1"/>
+
+								<label for="dsoft_tva_incas" string="Factura cu TVA la incasare"/>
+								<field name="dsoft_tva_incas" nolabel="1"/>
+
+								<label for="dsoft_altec" string="ALTEC"/>
+								<field name="dsoft_altec" nolabel="1"/>
+							</group>
+							<group></group>
+						</group>
+						<div style="overflow: auto;">
+							<br/>
+							<label string="DSOFT Export"/>
+							<field name="dsoft_invoice_line">
+								<tree string="Invoice lines">
+									<field name="dsoft_gestiune"/>
+									<field name="dsoft_cont_cor"/>
+									<field name="dsoft_tip_doc"/>
+									<field name="dsoft_fel_misc"/>
+									<field name="dsoft_codfur"/>
+									<field name="dsoft_denfur"/>
+									<field name="dsoft_numar" attrs="{'invisible':[('dsoft_numar','=',0)]}"/>
+									<field name="dsoft_data"/>
+									<field name="dsoft_cont"/>
+									<field name="dsoft_cod"/>
+									<field name="dsoft_denumire"/>
+									<field name="dsoft_um"/>
+									<field name="dsoft_cantitate"/>
+									<field name="dsoft_pret_achiz"/>
+									<field name="dsoft_pret_liv" attrs="{'invisible':[('dsoft_pret_liv','=',0.0)]}"/>
+									<field name="dsoft_pret_aman"/>
+									<field name="dsoft_valoare"/>
+									<field name="dsoft_tva"/>
+									<field name="dsoft_val_tva"/>
+									<field name="dsoft_anulat"/>
+									<field name="dsoft_pret_valut" attrs="{'invisible':[('dsoft_pret_valut','=',0.0)]}"/>
+									<field name="dsoft_tip_valut" />
+									<field name="dsoft_curs_valut" attrs="{'invisible':[('dsoft_curs_valut','=',0.0)]}"/>
+									<field name="dsoft_curs_fact" attrs="{'invisible':[('dsoft_curs_fact','=',0.0)]}"/>
+									<field name="dsoft_val_valut" attrs="{'invisible':[('dsoft_val_valut','=',0.0)]}"/>
+									<field name="dsoft_datascad"/>
+									<field name="dsoft_comanda"/>
+									<field name="dsoft_nr_aviz"/>
+									<field name="dsoft_data_aviz"/>
+									<field name="dsoft_jurnal"/>
+									<field name="dsoft_agent"/>
+									<field name="dsoft_tip_cec"/>
+									<field name="dsoft_numar_cec" attrs="{'invisible':[('dsoft_numar_cec','=',0)]}"/>
+									<field name="dsoft_tva_incas"/>
+									<field name="dsoft_altec"/>
+								</tree>
+							</field>
+						</div>
+					</page>
+				</xpath>
+			</field>
+		</record>
+
+
+		<record id="ds_view_account_invoice_filter" model="ir.ui.view">
+			<field name="name">account.invoice.select</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.view_account_invoice_filter"/>
+			<field name="context">{'order':'date_invoice desc'}</field>
+			<field name="arch" type="xml">
+				<xpath expr="//filter[@string='Period']" position="replace">
+					<filter name="period_group" string="Period" context="{'group_by':'period_id'}"/>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="ds_view_dsoft_supp_clients_tree" model="ir.ui.view">
+			<field name="name">dsoft suppliers clients</field>
+			<field name="model">dsoft_accounting.suppliers_clients</field>
+			<field name="arch" type="xml">
+				<tree string="Clienti si Furnizoru DSOFT">
+					<field name="name"/>
+					<field name="code"/>
+					<field name="address"/>
+					<field name="bank"/>
+					<field name="phone"/>
+					<field name="email"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="ds_dsoft_supp_clients_action">
+			<field name="name">Clienti si Furnizori DSOFT</field>
+			<field name="res_model">dsoft_accounting.suppliers_clients</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="dsoft_supp_clinets_menu" name="Furnizori si Clienti DSOFT"
+				  parent="ds_cod_fur"
+				  action="ds_dsoft_supp_clients_action" sequence="25"/>
+
+		<!--  -->
+
+		<record model="ir.actions.act_url" id="export_dsoft_act_url">
+			<field name="name">DSOFT Export</field>
+			<field name="url">/dsoft_accounting/export/dsoft</field>
+			<field name="target">new</field>
+		</record>
+
+		<record id="view_partner_form_dsoft" model="ir.ui.view">
+			<field name="name">res.partner.form</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form"></field>
+			<field name="arch" type="xml">
+				<xpath expr="//page[@string='Contacts']" position="before">
+					<page name="dsoft" string="DSOFT">
+						<group>
+							<field name="dsoft_codfur"/>
+							<field name="dsoft_cod_fiscal"/>
+							<field name="dsoft_tva_incas"/>
+						</group>
+					</page>
+				</xpath>
+			</field>
+		</record>
+
+
+		<record id="dsoft_product_uom_tree_view" model="ir.ui.view">
+			<field name="name">beespeed.product.uom.tree</field>
+			<field name="model">product.uom</field>
+			<field name="inherit_id" ref="product.product_uom_tree_view"></field>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='name']" position="before">
+					<field name="dsoft_name"/>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="dsoft_product_uom_form_view" model="ir.ui.view">
+			<field name="name">product.uom.form</field>
+			<field name="model">product.uom</field>
+			<field name="inherit_id" ref="product.product_uom_form_view"></field>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='name']" position="before">
+					<field name="dsoft_name"/>
+				</xpath>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_stock_quant_form_dsoft">
+			<field name="name">stock.quant.form</field>
+			<field name="model">stock.quant</field>
+			<field eval="10" name="priority"/>
+			<field name="inherit_id" ref="stock.view_stock_quant_form"></field>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='inventory_value']" position="after">
+					<field name="dsoft_available_for_export"/>
+					<field name="dsoft_cont"/>
+					<field name="dsoft_nir" />
+					<field name="dsoft_nr_fact" />
+					<field name="dsoft_cod" />
+					<field name="cost" string="Cost (DSOFT PRET ACHIZ)"/>
+				</xpath>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="dsoft_view_stock_quant_tree">
+			<field name="name">stock.quant.tree</field>
+			<field name="model">stock.quant</field>
+			<field name="inherit_id" ref="stock.view_stock_quant_tree"></field>
+			<field eval="20" name="priority"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='product_id']" position="after">
+					<field name="dsoft_available_for_export" string="Bon Consum"/>
+					<field name="dsoft_cod" string="COD DSOFT"/>
+					<field name="dsoft_nir" string="NIR"/>
+					<field name="cost" string="Cost (DSOFT PRET ACHIZ)"/>
+				</xpath>
+			</field>
+		</record>
+
+		<!--  -->
+
+		<record model="ir.actions.act_window" id="dsoft_import_action">
+			<field name="name">DSOFT</field>
+			<field name="res_model">dsoft_accounting.dsoft_line</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<record id="ds_dsoft_import_tree_view" model="ir.ui.view">
+			<field name="name">DSOFT</field>
+			<field name="model">dsoft_accounting.dsoft_line</field>
+			<field name="arch" type="xml">
+				<tree string="DSOFT" editable="top">
+					<field name="dsoft_codg"/>
+					<field name="dsoft_denumire"/>
+					<field name="dsoft_cont"/>
+					<field name="dsoft_um"/>
+					<field name="dsoft_datauintr"/>
+					<field name="dsoft_cod"/>
+					<field name="dsoft_eurocod"/>
+					<!-- <field name="dsoft_raft"/> -->
+					<!-- <field name="dsoft_grupa"/> -->
+					<!-- <field name="dsoft_dengrupa"/> -->
+					<field name="dsoft_pret_achiz"/>
+					<field name="dsoft_pret_aman"/>
+					<field name="dsoft_val_marfa"/>
+					<field name="dsoft_cantitate"/>
+					<field name="dsoft_tva"/>
+					<field name="dsoft_val_tva"/>
+				</tree>
+			</field>
+		</record>
+
+		<menuitem
+				action="dsoft_import_action"
+				id="ds_dsoft_import_menu"
+				parent="ds_import"
+				sequence="40"/>
+
+		<record id="ds_view_inventory_unit_form" model="ir.ui.view">
+			<field name="name">Gestiune</field>
+			<field name="model">dsoft_accounting.inventory_unit</field>
+			<field name="arch" type="xml">
+				<form string="Gestiune">
+					<field name="name" string="Nume"/>
+					<field name="code" string="Cod"/>
+				</form>
+			</field>
+		</record>
+
+		<record id="ds_view_inventory_unit_tree" model="ir.ui.view">
+			<field name="name">Gestiuni</field>
+			<field name="model">dsoft_accounting.inventory_unit</field>
+			<field name="arch" type="xml">
+				<tree string="Gestiuni">
+					<field name="name" string="Nume"/>
+					<field name="code" string="Cod"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="ds_action_inventory_unit" model="ir.actions.act_window">
+			<field name="name">Gestiuni</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">dsoft_accounting.inventory_unit</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem action="ds_action_inventory_unit" id="ds_action_inventory_unit_action"
+				  parent="account.menu_analytic_accounting"
+				  groups="analytic.group_analytic_accounting"/>
+
+		<record id="ds_view_account_analytic_account_form" model="ir.ui.view">
+			<field name="name">analytic.analytic.account.form</field>
+			<field name="model">account.analytic.account</field>
+			<field name="inherit_id" ref="analytic.view_account_analytic_account_form"></field>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='company_id']" position="after">
+					<field name="inventory_unit" string="Gestiune"/>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="ds_view_account_analytic_account_tree" model="ir.ui.view">
+			<field name="name">account.analytic.account.tree</field>
+			<field name="model">account.analytic.account</field>
+			<field name="inherit_id" ref="account.view_account_analytic_account_tree"></field>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='name']" position="after">
+					<field name="inventory_unit" string="Gestiune"/>
+				</xpath>
+			</field>
+		</record>
+
+	</data>
+</openerp>
